@@ -30,6 +30,7 @@ const userSchema = mongoose.Schema(
         }
       },
     },
+    isAdmin: { type: Boolean, default: false },
   },
   // Create createdAt and updatedAt fields automatically
   {
