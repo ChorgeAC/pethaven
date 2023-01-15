@@ -30,6 +30,8 @@ app.options("*", cors());
 app.use(passport.initialize());
 passport.use("jwt", jwtStrategy);
 
+app.use("/images", express.static("images"));
+
 // Reroute all API request starting with "/v1" route
 app.use("/v1", routes);
 
