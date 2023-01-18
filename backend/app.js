@@ -26,6 +26,7 @@ app.use(compression());
 // enable cors
 app.use(cors());
 app.options("*", cors());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 app.use(passport.initialize());
 passport.use("jwt", jwtStrategy);

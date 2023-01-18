@@ -14,7 +14,8 @@ const createNewPet = catchAsync(async (req, res) => {
 });
 
 const uploadImages = catchAsync(async (req, res) => {
-  const data = await saveImages(req.body.id, req.file.path);
+  const path = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+  const data = await saveImages(req.body.id, path);
   res.status(200).send("Image save successfully...");
 });
 
