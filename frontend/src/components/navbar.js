@@ -5,30 +5,24 @@ const Navbar = () => {
   return (
     <>
       <nav>
-        <div className="flex h-16 p-2 justify-between">
-          <div className="flex justify-center items-center">
-            <img
-              className="object-cover relative shadow-sm max-w-max h-full"
-              src={logo}
-              alt="logo"
-            />
-            <h2 className="p-1 text-4xl text-purple-900">Pet</h2>
+        <div className="mainNavbarContainer">
+          <div className="logoContainer">
+            <img src={logo} alt="logo" />
+            <h2>Pet</h2>
           </div>
-          <div className="md:hidden flex items-center">
+          <div className="toggleButton">
             <button type="submit">
               <FcMenu style={{ fontSize: "2rem" }} />
             </button>
           </div>
-          <div className="hidden md:block">
-            <div className="flex items-center mt-2">
-              <span className="p-3 text-2xl">
-                <Link to="/">Home</Link>
-              </span>
-              <span className="p-3 text-2xl">
-                <Link to="/about">About</Link>
-              </span>
-              <span className="p-3 text-2xl">Sign In</span>
-            </div>
+          <div className="navigationLinkContainer">
+            <span>
+              <Link to="/">Home</Link>
+            </span>
+            <span>
+              <Link to="/about">About</Link>
+            </span>
+            <span>Sign In</span>
           </div>
         </div>
       </nav>
