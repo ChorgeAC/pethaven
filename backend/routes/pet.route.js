@@ -10,6 +10,10 @@ const router = express.Router();
 
 router.post("/create", adminValidation, petController.createNewPet);
 
+router.post("/delete", adminValidation, petController.deletePet);
+
+router.post("/update", adminValidation, petController.updatePet);
+
 router.post(
   "/images",
   adminValidation,

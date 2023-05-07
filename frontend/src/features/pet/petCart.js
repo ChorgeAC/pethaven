@@ -18,9 +18,15 @@ const petSlice = createSlice({
     getAllPets: (state, action) => {
       state.pet = action.payload;
     },
+    closeSidebar: (state) => {
+      state.isSidebarOpen = false;
+    },
+    openSidebar: (state) => {
+      state.isSidebarOpen = true;
+    },
   },
 });
 
-export const { getAllPets } = petSlice.actions;
+export const { getAllPets, closeSidebar, openSidebar } = petSlice.actions;
 
 export default petSlice.reducer;

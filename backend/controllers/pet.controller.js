@@ -4,6 +4,8 @@ const {
   createPet,
   saveImages,
   provideAllPet,
+  deleteSinglePet,
+  updatePetInfo,
 } = require("../services/pet.service");
 
 const createNewPet = catchAsync(async (req, res) => {
@@ -14,7 +16,9 @@ const createNewPet = catchAsync(async (req, res) => {
 });
 
 const uploadImages = catchAsync(async (req, res) => {
-  const path = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+  const path = `${req.protocol}://${req.get("host")}/images/${
+    req.file.filename
+  }`;
   const data = await saveImages(req.body.id, path);
   res.status(200).send("Image save successfully...");
 });
@@ -24,4 +28,20 @@ const getAllpet = catchAsync(async (req, res) => {
   res.status(200).send(data);
 });
 
-module.exports = { createNewPet, uploadImages, getAllpet };
+const deletePet = catchAsync(async (req, res) => {
+  const data = await deleteSinglePet(req.body.id);
+  res.status(200).send("Pet remove Successfully");
+});
+
+const updatePet = catchAsync(async (req, res) => {
+  const data = await updatePetInfo(req.body);
+  res.status(200).send("Pet Info Saved...");
+});
+
+module.exports = {
+  createNewPet,
+  uploadImages,
+  getAllpet,
+  deletePet,
+  updatePet,
+};

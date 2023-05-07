@@ -80,9 +80,42 @@ const provideAllPet = async () => {
   }
 };
 
+const deleteSinglePet = async (id) => {
+  try {
+    const response = await Pet.findByIdAndDelete(id, (err, result) => {
+      return result;
+    });
+    return await response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const updatePetInfo = async (pet) => {
+  try {
+    const id = pet._id;
+    let newPet = {
+      age: pet.age,
+      breeds: pet.breeds,
+      height: pet.height,
+      images: pet.images,
+      price: pet.price,
+      sex: pet.sex,
+      weight: pet.weight,
+      message: pet.message,
+    };
+    const response = await Pet.findOneAndUpdate({ _id: id }, newPet);
+    return response;
+  } catch (error) {
+    console.log("error");
+  }
+};
+
 module.exports = {
   uploadImage,
   createPet,
   saveImages,
   provideAllPet,
+  deleteSinglePet,
+  updatePetInfo,
 };

@@ -49,20 +49,21 @@ const Filter = () => {
           ></input>
           <span style={{ marginLeft: "0.5rem" }}>all</span>
         </div>
-        {allPets.map((item) => {
-          const { breeds } = item;
-          return (
-            <div key={item._id}>
-              <input
-                type="checkbox"
-                id={breeds}
-                checked={breederFilter.includes(breeds)}
-                onChange={(e) => handleEventChange(e)}
-              ></input>
-              <span style={{ marginLeft: "0.5rem" }}>{breeds}</span>
-            </div>
-          );
-        })}
+        {[...new Set(allPets.map((item) => item.breeds))].map(
+          (breeds, index) => {
+            return (
+              <div key={index}>
+                <input
+                  type="checkbox"
+                  id={breeds}
+                  checked={breederFilter.includes(breeds)}
+                  onChange={(e) => handleEventChange(e)}
+                ></input>
+                <span style={{ marginLeft: "0.5rem" }}>{breeds}</span>
+              </div>
+            );
+          }
+        )}
       </div>
     </div>
   );

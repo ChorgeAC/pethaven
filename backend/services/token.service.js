@@ -16,9 +16,16 @@ const { tokenTypes } = require("../config/tokens");
  * @param {string} [secret] - Secret key to sign the token, defaults to config.jwt.secret
  * @returns {string}
  */
-const generateToken = (userId, expires, type, secret = config.jwt.secret) => {
+const generateToken = (
+  userId,
+  isAdmin,
+  expires,
+  type,
+  secret = config.jwt.secret
+) => {
   const payload = {
     sub: userId,
+    isAdmin: isAdmin,
     type: type,
     iat: Math.floor(Date.now() / 1000),
     exp: expires,
@@ -44,7 +51,12 @@ const generateToken = (userId, expires, type, secret = config.jwt.secret) => {
 const generateAuthTokens = async (user) => {
   const tokenExpires =
     Math.floor(Date.now() / 1000) + config.jwt.accessExpirationMinutes * 60;
-  const jwtToken = generateToken(user._id, tokenExpires, tokenTypes.ACCESS);
+  const jwtToken = generateToken(
+    user._id,
+    user.isAdmin,
+    tokenExpires,
+    tokenTypes.ACCESS
+  );
   const result = {
     access: {
       token: jwtToken,
