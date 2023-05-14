@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
 
 export const config = {
-  endpoint: `http://localhost:5000`,
+  endpoint: `https://petmall.onrender.com`,
 };
 
 function App() {
