@@ -1,5 +1,5 @@
 import React from "react";
-import { SinglePetInfo, Navbar, Sidebar } from "../components";
+import { SinglePetInfo, Navbar, Sidebar } from "../components/index";
 
 const SinglePet = () => {
   return (

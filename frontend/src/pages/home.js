@@ -1,4 +1,10 @@
-import { Navbar, FeaturedPet, Filter, Sort, Sidebar } from "../components/";
+import {
+  Navbar,
+  FeaturedPet,
+  Filter,
+  Sort,
+  Sidebar,
+} from "../components/index";
 
 const Home = () => {
   return (
