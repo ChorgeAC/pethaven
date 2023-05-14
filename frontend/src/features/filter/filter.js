@@ -4,17 +4,6 @@ const initialState = {
   filteredPets: [],
   allPets: [],
   gridView: true,
-  sort: "price-lowest",
-  filters: {
-    text: "",
-    category: "all",
-    company: "all",
-    color: "all",
-    maxPrice: 0,
-    minPrice: 0,
-    price: 0,
-    shipping: false,
-  },
 };
 
 const fliterSlice = createSlice({

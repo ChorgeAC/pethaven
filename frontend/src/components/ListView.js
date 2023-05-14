@@ -21,7 +21,7 @@ const ListView = ({ pets }) => {
                 Fuga itaque voluptates, dolorum natus quos minima expedita
                 maxime ex.
               </p>
-              <Link to={`/pets/${_id}`} className="btn">
+              <Link to={`/pet/${_id}`} className="btn">
                 Details
               </Link>
             </div>

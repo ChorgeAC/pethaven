@@ -14,6 +14,8 @@ router.post("/delete", adminValidation, petController.deletePet);
 
 router.post("/update", adminValidation, petController.updatePet);
 
+router.post("/remove/image", adminValidation, petController.removeImage);
+
 router.post(
   "/images",
   adminValidation,

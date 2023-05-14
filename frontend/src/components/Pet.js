@@ -6,7 +6,7 @@ const Pet = ({ _id, age, sex, breeds, images, price }) => {
     <div style={{ position: "relative" }}>
       <div className="imageConatiner">
         <img src={images[0]} alt={age} />
-        <Link to={`/pets/${_id}`} className="link">
+        <Link to={`/pet/${_id}`} className="link">
           <FaSearch />
         </Link>
       </div>

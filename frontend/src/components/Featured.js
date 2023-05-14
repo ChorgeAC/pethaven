@@ -29,7 +29,7 @@ const FeaturedPet = () => {
   }, []);
 
   if (filteredPets && filteredPets.length < 1) {
-    return <div className="loading">loading...</div>;
+    return <div className="loading"></div>;
   }
 
   if (gridView) {

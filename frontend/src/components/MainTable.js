@@ -47,10 +47,6 @@ const PetTable = ({ data }) => {
     }
   };
 
-  const editPetInfo = () => {
-    console.log("foo");
-  };
-
   return (
     <div className="petTableContainer">
       <table>
@@ -75,7 +71,7 @@ const PetTable = ({ data }) => {
                   <td>{row.age}</td>
                   <td>{row.sex}</td>
                   <td>{row.price} ₹</td>
-                  <td>
+                  <td className="actionContainer">
                     <button
                       className="deleteBtn"
                       onClick={() => handlePetRemove(row._id)}

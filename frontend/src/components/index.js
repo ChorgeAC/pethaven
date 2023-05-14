@@ -8,6 +8,7 @@ import Sidebar from "./Sidebar";
 import AddPetInfo from "./AddPetInfo";
 import PetTable from "./MainTable";
 import UploadImages from "./UploadImages";
+import SinglePetInfo from "./SinglePetInfo";
 export {
   Navbar,
   FeaturedPet,
@@ -19,4 +20,5 @@ export {
   AddPetInfo,
   PetTable,
   UploadImages,
+  SinglePetInfo,
 };

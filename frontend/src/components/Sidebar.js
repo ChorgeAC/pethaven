@@ -27,14 +27,20 @@ const Sidebar = () => {
       </div>
       <div style={{ padding: "1rem" }}>
         <div className="links">
-          <Link to="/">Home</Link>
+          <Link to="/" onClick={() => dispatch(closeSidebar())}>
+            Home
+          </Link>
         </div>
         <div className="links">
-          <Link to="/about">About</Link>
+          <Link to="/about" onClick={() => dispatch(closeSidebar())}>
+            About
+          </Link>
         </div>
         {isAdmin && (
           <div className="links">
-            <Link to="/admin">Admin</Link>
+            <Link to="/admin" onClick={() => dispatch(closeSidebar())}>
+              Admin
+            </Link>
           </div>
         )}
         {sub ? (
@@ -43,7 +49,9 @@ const Sidebar = () => {
           </div>
         ) : (
           <div className="links">
-            <Link to="/login">Sign In</Link>
+            <Link to="/login" onClick={() => dispatch(closeSidebar())}>
+              Sign In
+            </Link>
           </div>
         )}
       </div>

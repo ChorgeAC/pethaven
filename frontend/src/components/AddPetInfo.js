@@ -1,18 +1,34 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import {
   handleEventChange,
   loadPetInfo,
   resetPetInfo,
+  loadImagePage,
+  loadingOn,
+  lodingOff,
 } from "../features/pet/petAdd";
 import { config } from "../App";
 import { useEffect } from "react";
 import { UploadImages } from "./index";
+import PetImages from "./PetImages";
+import {
+  successMessage,
+  erroMessage,
+  warningMessage,
+  ToastContainer,
+} from "../utils/notification";
+import { getAllPets } from "../features/pet/petCart";
+import { loadFilterPets, setAllPet } from "../features/filter/filter";
 
 const AddPetInfo = () => {
   const dispatch = useDispatch();
-  const formData = useSelector((store) => store.petAdd);
+  const { isLoading, formData, isImagePageOpen } = useSelector(
+    (store) => store.petAdd
+  );
   const { pet } = useSelector((store) => store.pet);
-  let id = window.location.pathname.split("/")[2];
+  let { id } = useParams();
 
   const loadPet = () => {
     const singlePet = pet.find((item) => item._id === id);
@@ -27,6 +43,18 @@ const AddPetInfo = () => {
     loadPet();
   }, []);
 
+  const getallPet = async (url) => {
+    try {
+      const { data } = await axios.get(url);
+      dispatch(getAllPets(data));
+      dispatch(setAllPet(data));
+      dispatch(loadFilterPets());
+      return data;
+    } catch (error) {
+      console.log("error...");
+    }
+  };
+
   const handleChange = (e) => {
     let name = e.target.name;
     let value = e.target.value;
@@ -35,15 +63,19 @@ const AddPetInfo = () => {
 
   const validate = () => {
     if (!formData.breeds) {
+      warningMessage("Select Breed");
       return false;
     }
     if (!formData.age) {
+      warningMessage("Provide Age");
       return false;
     }
     if (!formData.sex) {
+      warningMessage("Provide Gender");
       return false;
     }
     if (!formData.price) {
+      warningMessage("Provide Price");
       return false;
     }
     return true;
@@ -53,8 +85,13 @@ const AddPetInfo = () => {
     e.preventDefault();
     if (validate()) {
       try {
+        dispatch(loadingOn());
         let authToken = window.localStorage.getItem("token");
-        const response = await fetch(`${config.endpoint}/v1/pet/create`, {
+        let url = `${config.endpoint}/v1/pet/create`;
+        if (formData._id) {
+          url = `${config.endpoint}/v1/pet/update`;
+        }
+        const response = await fetch(url, {
           method: "POST",
           mode: "cors", // no-cors, *cors, same-origin
           cache: "no-cache",
@@ -66,32 +103,31 @@ const AddPetInfo = () => {
           body: JSON.stringify(formData),
         });
         const data = await response.json();
-        alert("Pet saved successfully...");
-      } catch (error) {}
+        if (data.code === 200) {
+          successMessage(data.message);
+          getallPet(`${config.endpoint}/v1/pet/get`);
+          dispatch(lodingOff());
+        } else {
+          dispatch(lodingOff());
+        }
+      } catch (error) {
+        dispatch(lodingOff());
+      }
     }
   };
 
-  const updatePetinfo = async (e) => {
-    e.preventDefault();
-    if (validate()) {
-      try {
-        let authToken = window.localStorage.getItem("token");
-        const response = await fetch(`${config.endpoint}/v1/pet/update`, {
-          method: "POST",
-          mode: "cors", // no-cors, *cors, same-origin
-          cache: "no-cache",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: JSON.stringify(formData),
-        });
-        const data = await response.json();
-        console.log(data);
-      } catch (error) {}
-    }
-  };
+  if (isLoading) {
+    return <div className="loading"></div>;
+  }
+
+  if (isImagePageOpen) {
+    return (
+      <div className="section-center updateImageContainer">
+        <UploadImages id={id} />
+        <PetImages images={formData.images} />
+      </div>
+    );
+  }
 
   return (
     <div className="info-form">
@@ -123,6 +159,7 @@ const AddPetInfo = () => {
           onChange={handleChange}
           className="form-control"
           min={0}
+          max={20}
         />
       </div>
       <div className="form-group">
@@ -148,6 +185,7 @@ const AddPetInfo = () => {
           onChange={handleChange}
           className="form-control"
           min={0}
+          max={120}
         />
       </div>
       <div className="form-group">
@@ -159,7 +197,8 @@ const AddPetInfo = () => {
           value={formData.weight}
           onChange={handleChange}
           className="form-control"
-          min={0}
+          min={2}
+          max={45}
         />
       </div>
       <div className="form-group">
@@ -174,14 +213,21 @@ const AddPetInfo = () => {
           min={0}
         />
       </div>
-      <button
-        type="submit"
-        className="btn btn-primary"
-        onClick={formData._id ? updatePetinfo : handleSubmit}
-      >
-        Submit
-      </button>
-      {formData._id && <UploadImages id={formData._id} />}
+      <div className="submitContainer">
+        <button
+          type="submit"
+          className="btn btn-primary"
+          onClick={(e) => handleSubmit(e)}
+        >
+          Submit
+          <ToastContainer />
+        </button>
+        {formData._id && (
+          <button className="btn" onClick={() => dispatch(loadImagePage())}>
+            Upload Images
+          </button>
+        )}
+      </div>
     </div>
   );
 };

@@ -8,16 +8,17 @@ import {
   ToastContainer,
 } from "../utils/notification";
 
-const Login = () => {
+const Register = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (validate(email, password)) {
-      let credential = { email: email, password: password };
+    if (validate(name, email, password)) {
+      let credential = { email: email, password: password, name: name };
       try {
-        const response = await fetch(`${config.endpoint}/v1/auth/login`, {
+        const response = await fetch(`${config.endpoint}/v1/auth/register`, {
           method: "POST",
           mode: "cors", // no-cors, *cors, same-origin
           cache: "no-cache",
@@ -31,15 +32,13 @@ const Login = () => {
         if (data.code === 400) {
           erroMessage(data.message);
         }
-        if (data.code === 401) {
-          erroMessage(data.message);
-        }
         if (data.tokens && data.tokens.access) {
+          successMessage("Registeration Successful");
           let { token } = data.tokens.access;
           window.localStorage.setItem("token", token);
-          successMessage("You have successfully login");
           setEmail("");
           setPassword("");
+          setName("");
           window.location.href = "/";
         }
       } catch (error) {
@@ -48,13 +47,21 @@ const Login = () => {
     }
   };
 
-  const validate = (email, password) => {
+  const validate = (name, email, password) => {
+    if (!name) {
+      warningMessage("Plese enter name");
+      return false;
+    }
     if (!email) {
       warningMessage("Plese enter Email");
       return false;
     }
     if (!password) {
       warningMessage("Plese enter password");
+      return false;
+    }
+    if (password.length < 7) {
+      warningMessage("Password shoule have 8 characters.");
       return false;
     }
     return true;
@@ -66,6 +73,16 @@ const Login = () => {
       <p>Enter your details</p>
 
       <form>
+        <div className="form-group">
+          <label htmlFor="name">Name</label>
+          <i className="fa-solid fa-user"></i>
+          <input
+            type="text"
+            placeholder="User Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <i className="fa-solid fa-user"></i>
@@ -81,7 +98,7 @@ const Login = () => {
           <i className="fa-solid fa-lock"></i>
           <input
             type="password"
-            placeholder="Your password"
+            placeholder="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -89,15 +106,12 @@ const Login = () => {
       </form>
       <div>
         <span className="btn" onClick={(e) => handleSubmit(e)}>
-          Log In
+          Register
           <ToastContainer />
         </span>
         <span style={{ marginLeft: "1rem" }}>
-          <Link
-            to="/register"
-            style={{ textDecoration: "none", color: "white" }}
-          >
-            <button className="btn">Register</button>
+          <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+            <button className="btn">Home</button>
           </Link>
         </span>
       </div>
@@ -105,4 +119,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

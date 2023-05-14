@@ -6,9 +6,6 @@ const initialState = {
   pet_error: false,
   pet: [],
   featured_pet: [],
-  singlePetLoading: false,
-  singlePetError: false,
-  singlePet: {},
 };
 
 const petSlice = createSlice({

@@ -6,6 +6,7 @@ const {
   provideAllPet,
   deleteSinglePet,
   updatePetInfo,
+  removePetImage,
 } = require("../services/pet.service");
 
 const createNewPet = catchAsync(async (req, res) => {
@@ -20,7 +21,7 @@ const uploadImages = catchAsync(async (req, res) => {
     req.file.filename
   }`;
   const data = await saveImages(req.body.id, path);
-  res.status(200).send("Image save successfully...");
+  res.status(200).send({ code: 200, message: "Image save successfully..." });
 });
 
 const getAllpet = catchAsync(async (req, res) => {
@@ -35,7 +36,16 @@ const deletePet = catchAsync(async (req, res) => {
 
 const updatePet = catchAsync(async (req, res) => {
   const data = await updatePetInfo(req.body);
-  res.status(200).send("Pet Info Saved...");
+  res.status(200).send({ code: 200, message: data });
+});
+
+const removeImage = catchAsync(async (req, res) => {
+  const data = await removePetImage(req.body);
+  if (!data.acknowledged) {
+    res.status(200).send({ code: 401, message: "Image Not found" });
+  }
+  if (data.acknowledged)
+    res.status(200).send({ code: 200, message: "Image remove Successfully" });
 });
 
 module.exports = {
@@ -44,4 +54,5 @@ module.exports = {
   getAllpet,
   deletePet,
   updatePet,
+  removeImage,
 };

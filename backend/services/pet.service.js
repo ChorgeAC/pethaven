@@ -3,6 +3,8 @@ const ApiError = require("../utils/ApiError");
 const catchAsync = require("../utils/catchAsync");
 const multer = require("multer");
 const { Pet } = require("../models/index");
+const path = require("path");
+const fs = require("fs");
 
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -111,6 +113,39 @@ const updatePetInfo = async (pet) => {
   }
 };
 
+const removePetImage = async (pet) => {
+  const { imageUrl, id } = pet;
+  try {
+    let { images } = await getPetById(id);
+    let index = images.indexOf(imageUrl);
+    if (index < 0) {
+      return "Image Not found";
+    }
+    const filename = imageUrl.substring(imageUrl.lastIndexOf("/") + 1).trim();
+    if (filename) {
+      const imagePath = path.join(__dirname, "../images", filename);
+      fs.unlink(imagePath, function (err) {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+    let newImages = images.filter((e) => e !== imageUrl);
+    const data = await Pet.updateOne(
+      { _id: id },
+      {
+        $set: {
+          images: newImages,
+        },
+      }
+    );
+    if (!data) return "Image Not Remove";
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   uploadImage,
   createPet,
@@ -118,4 +153,5 @@ module.exports = {
   provideAllPet,
   deleteSinglePet,
   updatePetInfo,
+  removePetImage,
 };
