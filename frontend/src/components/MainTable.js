@@ -8,23 +8,23 @@ const rowsPerPage = 10;
 
 const PetTable = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(0);
-  const [selectedRow, setSelectedRow] = useState(null);
-  const [selectedCol, setSelectedCol] = useState(null);
+  // const [selectedRow, setSelectedRow] = useState(null);
+  // const [selectedCol, setSelectedCol] = useState(null);
   const totalPages = Math.ceil(data.length / rowsPerPage);
 
-  const handleCellClick = (rowIndex, colIndex) => {
-    setSelectedRow(rowIndex);
-    setSelectedCol(colIndex);
-  };
+  // const handleCellClick = (rowIndex, colIndex) => {
+  //   setSelectedRow(rowIndex);
+  //   setSelectedCol(colIndex);
+  // };
 
-  const handleFillIn = (value) => {
-    // update the data with the new value
-    const updatedData = [...data];
-    updatedData[selectedRow][selectedCol] = value;
-    // reset the selection
-    setSelectedRow(null);
-    setSelectedCol(null);
-  };
+  // const handleFillIn = (value) => {
+  //   // update the data with the new value
+  //   const updatedData = [...data];
+  //   updatedData[selectedRow][selectedCol] = value;
+  //   // reset the selection
+  //   setSelectedRow(null);
+  //   setSelectedCol(null);
+  // };
 
   const handlePetRemove = async (id) => {
     try {

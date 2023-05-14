@@ -5,11 +5,7 @@ import { closeImagePage } from "../features/pet/petAdd";
 import axios from "axios";
 import { getAllPets } from "../features/pet/petCart";
 import { loadFilterPets, setAllPet } from "../features/filter/filter";
-import {
-  successMessage,
-  erroMessage,
-  ToastContainer,
-} from "../utils/notification";
+import { successMessage, ToastContainer } from "../utils/notification";
 import { loadingOn, lodingOff } from "../features/pet/petAdd";
 
 const UploadImages = ({ id }) => {

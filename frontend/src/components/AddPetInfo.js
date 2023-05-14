@@ -15,7 +15,6 @@ import { UploadImages } from "./index";
 import PetImages from "./PetImages";
 import {
   successMessage,
-  erroMessage,
   warningMessage,
   ToastContainer,
 } from "../utils/notification";
@@ -41,6 +40,7 @@ const AddPetInfo = () => {
 
   useEffect(() => {
     loadPet();
+    // eslint-disable-next-line
   }, []);
 
   const getallPet = async (url) => {

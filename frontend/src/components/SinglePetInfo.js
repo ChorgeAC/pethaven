@@ -21,6 +21,7 @@ const SinglePetInfo = () => {
 
   useEffect(() => {
     loadPet(id);
+    // eslint-disable-next-line
   }, [id]);
 
   if (formData.images && formData.images.length < 1) {
