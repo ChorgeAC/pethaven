@@ -1,4 +1,4 @@
-import Navbar from "./Navbar";
+import Navbar from "./navbar";
 import FeaturedPet from "./Featured";
 import Filter from "./Filter";
 import GridView from "./GridView";
