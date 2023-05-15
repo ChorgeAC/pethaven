@@ -4,7 +4,7 @@ const cors = require("cors");
 const httpStatus = require("http-status");
 const routes = require("./routes/index.js");
 const { errorHandler } = require("./middlewares/error");
-const ApiError = require("./utils/ApiError");
+// const ApiError = require("./utils/ApiError");
 const { jwtStrategy } = require("./config/passport");
 const helmet = require("helmet");
 const passport = require("passport");
@@ -38,7 +38,7 @@ app.use("/v1", routes);
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
-  next(new ApiError(httpStatus.NOT_FOUND, "Not found"));
+  res.status(404).send("Not found");
 });
 
 // handle error
