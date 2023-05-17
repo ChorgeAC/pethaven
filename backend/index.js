@@ -6,7 +6,9 @@ mongoose.set("strictQuery", false);
 mongoose
   .connect(config.mongoose.url)
   .then(() => console.log("DB connected..."))
-  .catch((e) => console.log("Error in DB connection..."));
+  .catch((error) =>
+    console.log("Error in DB connection...", console.log(error))
+  );
 
 app.listen(config.port, () => {
   console.log("listening on port...");
